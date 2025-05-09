@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <section class="main">
+
+    {% if user.is_authenticated %}
+
+      <li class="nav-item">
+        <a class="btn btn-alert navbar-btn text-white" type="button" href="{% url 'sign-out' %}"> Sign out </a>
+      </li>
+    {% endif %}
+    Hola dashboard 
+    <h3>Welcome, {{ user|capfirst }} </h3>
+  </section>
+{% endblock content %}
