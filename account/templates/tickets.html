@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<section class="tickets">
+  <div class="mt-2">
+    {% include "navbar.html" %}
+  </div>
+  <div class="p-5">
+    <h2 class="text-3xl text-center">My ticket lists</h2>
+
+    <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mt-5">
+        <table class="table text-center">
+          <!-- head -->
+          <thead>
+            <tr>
+              <th>Ticket #</th>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Assigned</th>
+              <th>Created</th>       
+              <th>Last Updated</th>
+      
+            </tr>
+          </thead>
+          <tbody>
+
+          {% if tickets|length > 0 %}
+            {% for ticket in tickets %}
+              <tr>
+                  <td><a href="/ticket/{{ticket.id}}" class="link">{{ticket.id}}</td>
+                  <td>{{ticket.title}}</td>
+                  <td class="{{ticket.get_status_class}} mt-2">
+                    {{ticket.status}}
+                  </td>
+
+                  <td>{{ticket.assigned}}</td>
+                  <td>{{ticket.created_at}}</td>
+                  <td>{{ticket.updated_at}}</td>
+              </tr>
+            {% endfor %}
+            {% else %}
+              <tr class="text-center">
+                <td colspan="6">No tickets found.<br><br>
+                  <a href="{% url 'dashboard' %}" class="btn btn-info">CREATE ONE</a>
+                </td>
+              </tr>
+          
+          {% endif %}
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

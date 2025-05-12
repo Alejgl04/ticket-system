@@ -6,11 +6,18 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib import messages
 
+from ticket.models import Ticket
 from .forms import SignInForm, TicketForm
 
 # Create your views here.
 
 # THIS VIEWS FUNCTIONS ARE FOR FINAL USER THAT WANT TO ACCESS TO TICKET SYS#
+
+@login_required(login_url='index')
+def getTickets(request):
+  tickets = Ticket.objects.filter(username_ticket=request.user)
+  return render(request, 'tickets.html', { 'tickets':tickets })
+
 def index(request):
   form = SignInForm()
   

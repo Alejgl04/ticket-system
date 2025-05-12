@@ -7,7 +7,7 @@ class TicketStatus(models.TextChoices):
   IN_PROGRESS = 'In Progress'
   IN_REVIEW = 'In Review'
   DONE = 'Done'
-  
+
 class Ticket(models.Model):
   
   title = models.CharField(max_length=100)
@@ -32,5 +32,16 @@ class Ticket(models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)  
   image = models.ImageField(upload_to='images/', null=True)
-
+  
+  def get_status_class(self):
+    if self.status == TicketStatus.TO_DO:
+        return 'badge badge-primary'
+    elif self.status == TicketStatus.IN_PROGRESS:
+        return 'badge badge-secondary'
+    elif self.status == TicketStatus.IN_REVIEW:
+        return 'badge badge-info'
+    elif self.status == TicketStatus.DONE:
+        return 'badge badge-success'
+    else:
+      return 'badge badge-primary'
   
