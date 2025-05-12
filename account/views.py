@@ -4,7 +4,9 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import auth
 from django.contrib.auth.decorators import login_required
 
-from .forms import SignInForm
+from django.contrib import messages
+
+from .forms import SignInForm, TicketForm
 
 # Create your views here.
 
@@ -39,4 +41,19 @@ def sign_out(request):
 
 @login_required(login_url='index')
 def dashboard(request):
-  return render(request, 'dashboard.html')
+  
+  form = TicketForm()
+  
+  if request.method == 'POST':
+    form = TicketForm(request.POST, request.FILES)
+    if form.is_valid():  
+      
+      instance = form.save(commit=False)
+      instance.username_ticket = request.user  # Assign the current user
+      instance.save()
+      messages.info(request, 'New ticket has been created')
+      return redirect('dashboard')
+  
+  context = { 'form': form }
+  return render(request, 'dashboard.html', context)
+
