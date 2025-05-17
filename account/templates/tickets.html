@@ -14,7 +14,7 @@
         <table class="table text-center">
           <!-- head -->
           <thead>
-            <tr>
+            <tr style="background: #0b9f7b;color: white;">
               <th>Ticket #</th>
               <th>Title</th>
               <th>Status</th>
@@ -29,7 +29,7 @@
           {% if tickets|length > 0 %}
             {% for ticket in tickets %}
               <tr>
-                  <td><a href="/ticket/{{ticket.id}}" class="link">{{ticket.id}}</td>
+                  <td><a href="/dashboard/ticket/{{ticket.id}}" class="link">{{ticket.id}}</td>
                   <td>{{ticket.title}}</td>
                   <td class="{{ticket.get_status_class}} mt-2">
                     {{ticket.status}}

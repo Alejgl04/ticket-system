@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,5 +16,32 @@
   {% block content %}
 
   {% endblock %}
+
+  <script>
+
+    const toggle = document.getElementById('darkModeToggle');
+
+      // Update theme in toggle event listener
+    toggle.addEventListener('change', () => {
+      const htmlElement = document.documentElement;
+      htmlElement.classList.toggle('dark');
+      if (htmlElement.classList.contains('dark')) {
+        htmlElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        htmlElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    // Check for stored preference on page load
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggle.checked = true;
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  </script>
 </body>
 </html>

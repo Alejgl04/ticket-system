@@ -14,11 +14,39 @@ from .forms import SignInForm, TicketForm
 # THIS VIEWS FUNCTIONS ARE FOR FINAL USER THAT WANT TO ACCESS TO TICKET SYS#
 
 @login_required(login_url='index')
+def get_ticketby_id(request, ticket_id):
+  ticket = Ticket.objects.get(pk=ticket_id)
+  return render(request, 'ticket-by-id.html', {'ticket':ticket})
+
+
+@login_required(login_url='index')
 def getTickets(request):
   tickets = Ticket.objects.filter(username_ticket=request.user)
   return render(request, 'tickets.html', { 'tickets':tickets })
 
+
+@login_required(login_url='index')
+def dashboard(request):
+  
+  form = TicketForm()
+  
+  if request.method == 'POST':
+    form = TicketForm(request.POST, request.FILES)
+    if form.is_valid():  
+      
+      instance = form.save(commit=False)
+      instance.username_ticket = request.user  # Assign the current user
+      instance.save()
+      messages.info(request, 'New ticket has been created')
+      return redirect('dashboard')
+  
+  context = { 'form': form }
+  return render(request, 'dashboard.html', context)
+
 def index(request):
+  if request.user.is_authenticated:
+    return redirect('dashboard')
+  
   form = SignInForm()
   
   if request.method == 'POST':
@@ -44,23 +72,4 @@ def sign_out(request):
   
   auth.logout(request)  
   return redirect('index')
-
-
-@login_required(login_url='index')
-def dashboard(request):
-  
-  form = TicketForm()
-  
-  if request.method == 'POST':
-    form = TicketForm(request.POST, request.FILES)
-    if form.is_valid():  
-      
-      instance = form.save(commit=False)
-      instance.username_ticket = request.user  # Assign the current user
-      instance.save()
-      messages.info(request, 'New ticket has been created')
-      return redirect('dashboard')
-  
-  context = { 'form': form }
-  return render(request, 'dashboard.html', context)
 

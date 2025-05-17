@@ -28,10 +28,11 @@ class Ticket(models.Model):
     related_query_name="username_ticket",
     null=True, 
     blank=True, 
+    
   )
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)  
-  image = models.ImageField(upload_to='images/', null=True)
+  image = models.ImageField(upload_to='images/', null=True, blank=True)
   
   def get_status_class(self):
     if self.status == TicketStatus.TO_DO:
