@@ -1,5 +1,5 @@
 .login_img_section {
-  background: linear-gradient(rgba(2,2,2,.7),rgba(0,0,0,.7)),url('/static/media/images/support-ticket-software.jpg') center center;
+  background: linear-gradient(rgba(2,2,2,.7),rgba(0,0,0,.7)),url('/static/media/backgrounds/support-ticket-software.jpg') center center;
 }
 
 .cursor-pointer {
