@@ -1,0 +1,40 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <section class="ticket-by-id">
+    <div>
+      <div class="mt-2">
+        {% include "navbar.html" %}
+      </div>    
+    </div>
+    <div class="p-4 flex flex-column justify-center aling-center">
+      <div class="card bg-primary text-primary-content w-96">
+        <div class="card-body">
+          <h2 class="card-title">Ticket # {{ticket.id}}</h2>
+          <h3 class="card-title">Ticket Title: {{ticket.title}}</h3>
+          <h3 class="card-title">Status: {{ticket.status}}</h3>
+          <h3 class="card-title">Assigned: {{ticket.assigned}}</h3>
+          <h3 class="card-title">Created AT: {{ticket.created_at}}</h3>
+          <h3 class="card-title">Updated AT: {{ticket.updated_at}}</h3>
+          <hr>
+          <p>{{ticket.description}}</p>
+          {% if ticket.image.url is not None %}
+            <hr>
+            <p>
+              <a href="{{ ticket.image.url }}" target="_blank">
+                <img class="img-fluid" alt="Responsive image" src="{{ ticket.image.url }}">          
+              </a>
+            </p>            
+          {% endif %}
+          <div class="card-actions">
+            <a class="btn" href="{% url 'tickets' %}">go back</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}
