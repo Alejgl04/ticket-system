@@ -64,7 +64,13 @@
             <span class="badge">New</span>
           </a>
         </li>
-        <li><a type="button" href="{% url 'sign-out' %}">Logout</a></li>
+        {% if user.is_authenticated and user.is_staff %}
+
+          <li><a type="button" href="{% url 'admin:index' %}">Admin Site</a></li>
+        
+        {% endif %}
+        
+          <li><a type="button" href="{% url 'sign-out' %}">Logout</a></li>
       </ul>
     </div>
     {% endif %}
